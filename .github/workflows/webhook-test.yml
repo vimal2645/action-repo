@@ -1,0 +1,22 @@
+name: Webhook Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  trigger-webhook:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send webhook to Flask endpoint
+        run: |
+          curl -X POST https://9c397883b3e9.ngrok-free.app/webhook \
+            -H "Content-Type: application/json" \
+            -d '{
+              "pusher": { "name": "vimal" },
+              "repository": { "name": "action-repo" },
+              "ref": "refs/heads/main",
+              "head_commit": { "timestamp": "2025-07-14T09:00:00Z" }
+            }'
